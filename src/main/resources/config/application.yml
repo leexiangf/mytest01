@@ -1,0 +1,10 @@
+
+spring:
+  profiles:
+    active: dev
+    #include: prod,dev  加载多个配置文件，比如其他的redis，db。。。等等
+
+
+
+
+
