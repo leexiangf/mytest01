@@ -1,0 +1,16 @@
+server:
+  port: 9010
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    nacos:
+      config:
+        server-addr: http://124.221.172.3:8848
+        file-extension: yaml
+        name: gateway-dev
+        refresh-enabled: true
+        group: DEFAULT_GROUP
+      discovery:
+        server-addr: http://124.221.172.3:8848
+        register-enabled: true
