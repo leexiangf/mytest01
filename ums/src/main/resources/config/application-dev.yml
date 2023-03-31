@@ -1,41 +1,84 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /ums
 spring:
+  main:
+    allow-bean-definition-overriding: true
   datasource:
-    username:
-    password:
-    url: jdbc:mysql://124.221.172.3:3306/xyy?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    druid:
-      max-pool-prepared-statement-per-connection-size: 20
-      initial-size: 3
-  aop:
-    proxy-target-class: true
+    hikari:
+      # 最小空闲连接数量
+      minimum-idle: 5
+      # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      # 数据库连接池最大连接数量，默认是10
+      maximum-pool-size: 64
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      # 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 5000
+      connection-test-query: SELECT 1
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    #password: 'borya#@!123456'
+    #url: jdbc:mysql://192.168.10.54:3306/i-link-pms-new?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
+    url: jdbc:mysql://192.168.10.101:3306/i-link-pms?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
+    password: 'Borya_123'
+    username: root
   redis:
-    host: 124.221.172.3
-    port: 6379
-    password: 123456
     jedis:
       pool:
-        max-idle: 10  #连接池空闲最大
-        min-idle: 2   #连接池空闲最小
-        max-active: 200 #连接池最大链接数
-        max-wait: 3000 #连接池最大超时时间
+        max-idle: 24
+    lettuce:
+      pool:
+        max-active: 64
+        max-wait: 10s
+        min-idle: 8
+    database: 13
+    #    host: 192.168.10.48
+    #    password: '2wsx3edc'
+    host: 192.168.10.101
+    password: 'ZXCVB!@#$%asdfg'
+    port: 6378
+    timeout: 10s
   rabbitmq:
-    host: 124.221.172.3
+    #    host: 121.196.35.44
+    #    port: 5672
+    #    username: guest
+    #    password: guest
+    #    host: 192.168.10.48
+    #    port: 5672
+    #    username: testcb
+    #    password: testcb
+    host: 192.168.10.101
     port: 5672
-    username: lxf
-    password: 123456
+    username: guest
+    password: guest
+    publisher-returns: true
     listener:
-      direct:
+      simple:
         acknowledge-mode: manual
+        concurrency: 10
+        max-concurrency: 10
         retry:
           enabled: true
-          max-attempts: 3
-          max-interval: 10000ms
+          initial-interval: 10s
+          max-attempts: 5
+          max-interval: 10s
+          multiplier: 1.0
     template:
+      retry:
+        enabled: true
+        initial-interval: 10s
+        max-attempts: 5
+        max-interval: 10s
+        multiplier: 1.0
       mandatory: true
-    publisher-returns: true
-    publisher-confirm-type: correlated
+    publisher-confirm-type: simple
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 20MB
 
   mvc:
     pathmatch:
