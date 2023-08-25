@@ -43,4 +43,11 @@ public class LockTest {
             }).start();
         }
     }
+
+    @Test
+    public void testRedisson2(){
+        String userId3 = "U3";
+        String join = redissonService.join(userId3);
+        log.warn(join);
+    }
 }

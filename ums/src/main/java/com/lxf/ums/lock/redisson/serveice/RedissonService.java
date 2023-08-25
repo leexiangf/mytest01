@@ -27,14 +27,17 @@ public class RedissonService {
         log.info("user in:{}",userId);
         RLock rLock = redissonClient.getLock(preKey + userId);
         try {
-            boolean tryLock = rLock.tryLock(1, 10, TimeUnit.SECONDS);
-            System.out.println(tryLock);
-            System.out.println(userId);
-        }catch (InterruptedException e){
+            boolean b = rLock.tryLock(2, 10, TimeUnit.SECONDS);
+            if(b){
+                return userId;
+            }else {
+                return "failed :"+userId;
+            }
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
             rLock.unlock();
         }
-        return userId;
+        return null;
     }
 }
