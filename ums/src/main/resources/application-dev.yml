@@ -25,20 +25,20 @@ spring:
     url: jdbc:mysql://192.168.10.101:3306/link_local?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
     password: 'Borya_123'
     username: root
-  redis:
-    jedis:
-      pool:
-        max-idle: 24
-    lettuce:
-      pool:
-        max-active: 64
-        max-wait: 10s
-        min-idle: 8
-    database: 13
-    host: 192.168.10.101
-    password: 'ZXCVB!@#$%asdfg'
-    port: 6378
-    timeout: 10s
+#  redis:
+#    jedis:
+#      pool:
+#        max-idle: 24
+#    lettuce:
+#      pool:
+#        max-active: 64
+#        max-wait: 10s
+#        min-idle: 8
+#    database: 13
+#    host: 192.168.10.101
+#    password: 'ZXCVB!@#$%asdfg'
+#    port: 6378
+#    timeout: 10s
   rabbitmq:
     host: 192.168.10.101
     port: 5672

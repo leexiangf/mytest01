@@ -1,8 +1,11 @@
 package com.lxf.redis.config;
 
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.lxf.redis.constant.RedisConstant;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +19,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -90,6 +94,19 @@ public class RedisConfig {
     public KeyGenerator myCommonKey() {
         return (o, method, objects) -> method.getName() + "[" + Stream.of(objects).map(String::valueOf).collect(Collectors.joining("_")) + "]";
     }
+
+//    @Bean("caffeineCache")
+//    public CacheManager cacheManager(){
+//        CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager();
+//        Caffeine<Object, Object> caffeine = Caffeine.newBuilder()
+//                //多少时间后无写入过期
+//                .expireAfterWrite(1, TimeUnit.HOURS)
+//                .maximumSize(1000)
+//                .initialCapacity(100);
+//        caffeineCacheManager.setCaffeine(caffeine);
+//        caffeineCacheManager.setAllowNullValues(true);
+//        return caffeineCacheManager;
+//    }
 
 
 }

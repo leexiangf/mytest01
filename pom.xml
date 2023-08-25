@@ -25,6 +25,8 @@
     <properties>
         <java.version>1.8</java.version>
         <fastjson2>2.0.24</fastjson2>
+        <spring-cloud-dependencies>2021.0.5</spring-cloud-dependencies>
+        <spring-cloud-alibaba-dependencies>2021.0.5.0</spring-cloud-alibaba-dependencies>
     </properties>
     <dependencies>
 <!--        <dependency>
@@ -71,10 +73,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>

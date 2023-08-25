@@ -2,6 +2,7 @@ package com.lxf.ums.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lxf.common.result.JsonResult;
+import com.lxf.redis.constant.RedisConstant;
 import com.lxf.ums.async.MyAsync;
 import com.lxf.ums.mapper.UserMapper;
 import com.lxf.ums.pojo.entity.User;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Cacheable(cacheManager = "caffeineCache",value = "user",key = "#name")
+    @Cacheable(cacheManager = RedisConstant.CACHE_FUN_NAME,value = "user",key = "#name")
     public User getByName(String name){
         return new User();
     }
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
             while (true) {
                 if(count.get()<=0)
                     break;
-                if(redisUtil.setIfAbsent(goodsId,uuid,10)){
+                if(redisUtil.setIfAbsent(goodsId,uuid.toString(),10)){
                     myAsync.asyncThread(goodsId,uuid);
                     //模拟超时操作
                     log.info("1111--------key的过期时间："+redisUtil.getExpire(goodsId));

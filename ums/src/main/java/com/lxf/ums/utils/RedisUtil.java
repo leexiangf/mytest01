@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public  class RedisUtil {
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     // =============================common============================
     /**
@@ -96,7 +96,7 @@ public  class RedisUtil {
 
     public boolean set(String key, Object value) {
         try {
-            redisTemplate.opsForValue().set(key, value);
+            redisTemplate.opsForValue().set(key, value.toString());
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,7 +116,7 @@ public  class RedisUtil {
     public boolean set(String key, Object value, long time) {
         try {
             if (time > 0) {
-                redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(key, value.toString(), time, TimeUnit.SECONDS);
             } else {
                 set(key, value);
             }
@@ -305,7 +305,7 @@ public  class RedisUtil {
      * 根据key获取Set中的所有值
      * @param key 键
      */
-    public Set<Object> sGet(String key) {
+    public Set<String> sGet(String key) {
         try {
             return redisTemplate.opsForSet().members(key);
         } catch (Exception e) {
@@ -339,7 +339,7 @@ public  class RedisUtil {
      * @param values 值 可以是多个
      * @return 成功个数
      */
-    public long sSet(String key, Object... values) {
+    public long sSet(String key, String... values) {
         try {
             return redisTemplate.opsForSet().add(key, values);
         } catch (Exception e) {
@@ -357,7 +357,7 @@ public  class RedisUtil {
      * @param values 值 可以是多个
      * @return 成功个数
      */
-    public long sSetAndTime(String key, long time, Object... values) {
+    public long sSetAndTime(String key, long time, String... values) {
         try {
             Long count = redisTemplate.opsForSet().add(key, values);
             if (time > 0) {
@@ -413,7 +413,7 @@ public  class RedisUtil {
      * @param start 开始
      * @param end   结束 0 到 -1代表所有值
      */
-    public List<Object> lGet(String key, long start, long end) {
+    public List<String> lGet(String key, long start, long end) {
         try {
             return redisTemplate.opsForList().range(key, start, end);
         } catch (Exception e) {
@@ -460,7 +460,7 @@ public  class RedisUtil {
      * @param key   键
      * @param value 值
      */
-    public boolean lSet(String key, Object value) {
+    public boolean lSet(String key, String value) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
             return true;
@@ -477,7 +477,7 @@ public  class RedisUtil {
      * @param value 值
      * @param time  时间(秒)
      */
-    public boolean lSet(String key, Object value, long time) {
+    public boolean lSet(String key, String value, long time) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
             if (time > 0) {
@@ -499,7 +499,7 @@ public  class RedisUtil {
      * @param value 值
      * @return
      */
-    public boolean lSets(String key, List<Object> value) {
+    public boolean lSets(String key, List<String> value) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;
@@ -519,11 +519,11 @@ public  class RedisUtil {
      * @param time  时间(秒)
      * @return
      */
-    public boolean lSets(String key, List<Object> value, long time) {
+    public boolean lSets(String key, List<String> value, long time) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             if (time > 0)
-                expire(key, time);
+            { expire(key, time);}
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -541,7 +541,7 @@ public  class RedisUtil {
      * @return
      */
 
-    public boolean lUpdateIndex(String key, long index, Object value) {
+    public boolean lUpdateIndex(String key, long index, String value) {
         try {
             redisTemplate.opsForList().set(key, index, value);
             return true;
@@ -580,7 +580,7 @@ public  class RedisUtil {
      * @param timeOut 超时时间
      * @return
      */
-    public boolean setIfAbsent(String key,Object value,long timeOut){
+    public boolean setIfAbsent(String key,String value,long timeOut){
         try {
         return    redisTemplate.opsForValue().setIfAbsent(key,value,timeOut,TimeUnit.SECONDS);
         }catch (Exception e){
