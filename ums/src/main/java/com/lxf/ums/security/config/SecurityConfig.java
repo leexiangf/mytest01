@@ -85,8 +85,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //放行登录接口 user/login   anonymous()只能未登录的状态访问
+        //放行登录接口 user/login
         http.authorizeRequests()
+                //anonymous()只能未登录的状态访问
                 .antMatchers("/login","/sms/login").anonymous()
                 //permitAll() 所有人能访问（登录和未登录）
                 .antMatchers("/index","/sms/send/code").permitAll()

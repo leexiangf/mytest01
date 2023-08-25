@@ -44,9 +44,7 @@ public class UserDetailServiceImp implements UserDetailsService {
         }
         //封装权限信息 这里从数据库通过userId查询出来的权限集合
         List<SysRole> roles = userRepository.getRoleByUserId(user.getUserId());
-        List<String> collect = roles.stream().map((role) -> {
-            return role.getRoleName();
-        }).collect(Collectors.toList());
+        List<String> collect = roles.stream().map(SysRole::getRoleName).collect(Collectors.toList());
         for (String s : collect) {
             log.info("用户角色名：{}",s);
         }

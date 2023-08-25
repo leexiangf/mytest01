@@ -34,9 +34,6 @@ public class AccessDecisionProcessor implements AccessDecisionVoter<FilterInvoca
     public int vote(Authentication authentication, FilterInvocation object, Collection<ConfigAttribute> attributes) {
         String requestUrl = object.getRequestUrl();
         List<SysMenu> menus = menuService.getMenus();
-        List<String> menuUrl= menus.stream().map((x) -> {
-            return x.getMenuUrl();
-        }).collect(Collectors.toList());
         for (SysMenu menu : menus) {
             if(antPathMatcher.match(menu.getMenuUrl(),requestUrl)){
                 return ACCESS_GRANTED;

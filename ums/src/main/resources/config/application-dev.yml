@@ -22,7 +22,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     #password: 'borya#@!123456'
     #url: jdbc:mysql://192.168.10.54:3306/i-link-pms-new?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
-    url: jdbc:mysql://192.168.10.101:3306/i-link-local?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
+    url: jdbc:mysql://192.168.10.101:3306/link_local?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
     password: 'Borya_123'
     username: root
   redis:

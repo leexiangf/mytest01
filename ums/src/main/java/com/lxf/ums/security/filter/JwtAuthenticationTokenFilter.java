@@ -19,6 +19,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -74,7 +75,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         log.info("redis role list size: {}",range.size());
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         //如果redis中有，就从redis中获取
-        if(Objects.nonNull(range)&&range.size()>0){
+        if(!CollectionUtils.isEmpty(range)){
             authorities =
                     range.stream()
                             .map(SimpleGrantedAuthority::new)
@@ -82,15 +83,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }else {
             // 如果Redis中没有，就在数据库中查询，并放入redis
             List<SysRole> roles = userRepository.getRoleByUserId(userId);
-            List<String> rolesNames = roles.stream().map((role) -> {
-                return role.getRoleName();
-            }).collect(Collectors.toList());
+            List<String> rolesNames = roles.stream().map(SysRole::getRoleName).collect(Collectors.toList());
             authorities =
                     rolesNames.stream()
                             .map(SimpleGrantedAuthority::new)
                             .collect(Collectors.toList());
             redisUtil.set
-                    ("authorities"+userId,JSONObject.toJSONString(rolesNames),3600l);
+                    ("authorities"+userId,JSONObject.toJSONString(rolesNames),3600L);
         }
         //存入securityContextHolder
         //封装到这个类中     获取权限信息user.getAuthorities()

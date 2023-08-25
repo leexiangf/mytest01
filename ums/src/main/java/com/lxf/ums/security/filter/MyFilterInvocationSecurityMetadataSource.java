@@ -13,6 +13,8 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -32,6 +34,15 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
     @Autowired
     private MenuService menuService;
 
+    private List<SysMenu> menus = new ArrayList<>();
+
+    @PostConstruct
+    private void init(){
+        //查询数据库 获取所有菜单
+         menus = menuService.getMenus();
+         log.info("init menu for roles : size {}",menus.size());
+    }
+
     /**
      * 路径匹配器
      */
@@ -48,8 +59,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         //获取请求路径
         String requestUrl = ((FilterInvocation) object).getRequestUrl();
         log.info("requestUrl : {}",requestUrl);
-        //查询数据库 获取所有菜单
-        List<SysMenu> menus = menuService.getMenus();
+
 
         for (SysMenu menu : menus) {
             //如果路径匹配
