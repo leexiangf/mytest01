@@ -22,7 +22,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     #password: 'borya#@!123456'
     #url: jdbc:mysql://192.168.10.54:3306/i-link-pms-new?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
-    url: jdbc:mysql://192.168.10.101:3306/i-link-pms?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
+    url: jdbc:mysql://192.168.10.101:3306/i-link-local?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
     password: 'Borya_123'
     username: root
   redis:
@@ -35,21 +35,11 @@ spring:
         max-wait: 10s
         min-idle: 8
     database: 13
-    #    host: 192.168.10.48
-    #    password: '2wsx3edc'
     host: 192.168.10.101
     password: 'ZXCVB!@#$%asdfg'
     port: 6378
     timeout: 10s
   rabbitmq:
-    #    host: 121.196.35.44
-    #    port: 5672
-    #    username: guest
-    #    password: guest
-    #    host: 192.168.10.48
-    #    port: 5672
-    #    username: testcb
-    #    password: testcb
     host: 192.168.10.101
     port: 5672
     username: guest

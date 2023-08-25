@@ -1,7 +1,7 @@
 package com.lxf.redis.service.impl;
 
+import com.lxf.redis.constant.RedisConstant;
 import com.lxf.redis.service.RedissionRateLimiterExampleService;
-import com.promotion.redis.constant.RedisConstant;
 import org.redisson.api.RRateLimiter;
 import org.redisson.api.RateIntervalUnit;
 import org.redisson.api.RateType;
