@@ -19,11 +19,11 @@ import java.io.IOException;
  * @Created lxf
  */
 public class AuthUtil {
-    public static final String APPID = "";
-    public static final String APPSECRET = "";
+    public static final String APPID = "wxf80f3f5e8c5a06bb";
+    public static final String APPSECRET = "49ec132fa089a70916a4d90ff46bce90";
 
     //回调地址
-    public static final String backUrl="";//如果你没有在application.yml文件中设置 context-path: /api，那么api就去掉
+    public static final String backUrl="http://zchhai.natappfree.cc/api/callBack";//如果你没有在application.yml文件中设置 context-path: /api，那么api就去掉
     //    public static final String backUrl="http://localhost:8080/callBack";
     public static JSONObject doGetJson(String url) throws ClientProtocolException, IOException {
         JSONObject jsonObject = null;
