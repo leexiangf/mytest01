@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: netty-client-service
+  cloud:
+    nacos:
+      config:
+        enabled: false
+        #server-addr: http://124.221.172.3:8848
+        file-extension: yaml
+        name: ums-dev
+        refresh-enabled: true
+        group: DEFAULT_GROUP
+      discovery:
+        enabled: false
+        #server-addr: http://124.221.172.3:8848
+        register-enabled: true

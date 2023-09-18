@@ -1,0 +1,89 @@
+server:
+  port: 8899
+  servlet:
+    context-path: /netty-server
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    hikari:
+      # 最小空闲连接数量
+      minimum-idle: 5
+      # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      # 数据库连接池最大连接数量，默认是10
+      maximum-pool-size: 64
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      # 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 5000
+      connection-test-query: SELECT 1
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    #password: 'borya#@!123456'
+    #url: jdbc:mysql://192.168.10.54:3306/i-link-pms-new?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
+    url: jdbc:mysql://192.168.10.101:3306/link_local?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowLoadLocalInfile=true
+    password: 'Borya_123'
+    username: root
+#  redis:
+#    jedis:
+#      pool:
+#        max-idle: 24
+#    lettuce:
+#      pool:
+#        max-active: 64
+#        max-wait: 10s
+#        min-idle: 8
+#    database: 13
+#    host: 192.168.10.101
+#    password: 'ZXCVB!@#$%asdfg'
+#    port: 6378
+#    timeout: 10s
+  rabbitmq:
+    host: 192.168.10.101
+    port: 5672
+    username: guest
+    password: guest
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 10
+        max-concurrency: 10
+        retry:
+          enabled: true
+          initial-interval: 10s
+          max-attempts: 5
+          max-interval: 10s
+          multiplier: 1.0
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10s
+        max-attempts: 5
+        max-interval: 10s
+        multiplier: 1.0
+      mandatory: true
+    publisher-confirm-type: simple
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 20MB
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+#swagger配置
+swagger:
+  enable: true
+  application-name: ${spring.application.name}
+  application-version: 1.0
+  application-description: springfox swagger 3.0整合Demo
+  try-host: http://localhost:${server.port}
+#mybatis_plus 配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+

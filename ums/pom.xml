@@ -63,6 +63,11 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.66.Final</version>
+        </dependency>
 
 <!--        &lt;!&ndash; 导入 redission 依赖 &ndash;&gt;-->
 <!--        <dependency>-->
