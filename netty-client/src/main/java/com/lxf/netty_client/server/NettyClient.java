@@ -54,6 +54,10 @@ public class NettyClient {
 //                channel.writeAndFlush("hello,sun!");
 //            }
             channel.writeAndFlush("hello,gozi");
+            while (channel.isActive()){
+                Thread.sleep(25000L);
+                channel.writeAndFlush("PING35308XFFF");
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {

@@ -60,13 +60,27 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
         removeHeart(channel.id().asShortText());
     }
 
+    private String getChannelShortId(Channel channel){
+        return channel.id().asShortText();
+    }
+
+    private String getChannelLongId(Channel channel){
+        return channel.id().asLongText();
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
        // String msg = byteBuf.toString(StandardCharsets.UTF_8);
-        log.info("收到消息：{}",msg);
         //获取到当前 channel
         Channel channel = ctx.channel();
-        resetHeart(channel.id().asShortText());
+        String channelShortId = getChannelShortId(channel);
+        log.info("收到 {} 的消息：{}",channelShortId,msg);
+
+        if(msg!=null && msg.equals("PING35308XFFF")){
+            resetHeart(channelShortId);
+            channel.writeAndFlush("PONG35308XFFF");
+            return;
+        }
         //这时我们遍历 channelGroup, 根据不同的情况， 回送不同的消息
         channelGroup.forEach(ch -> {
             if (channel != ch) { //不是当前的 channel,转发消息
@@ -95,7 +109,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        String channelId = ctx.channel().id().asShortText();
+        String channelId = getChannelShortId(ctx.channel());
         log.warn("userEventTriggered : channelId : {}",channelId);
         IdleStateEvent idleStateEvent = (IdleStateEvent)evt;
         String state = null;
@@ -125,7 +139,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
         }else {
             heartInt.incrementAndGet();
         }
-        log.warn("channel : {} \n heart count :{}",channelId,heartInt.get());
+        log.warn("channel : {} , heart count :{}",channelId,heartInt.get());
         return heartInt.get();
     }
 

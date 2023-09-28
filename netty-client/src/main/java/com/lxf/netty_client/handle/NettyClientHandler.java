@@ -7,6 +7,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 
@@ -20,11 +22,22 @@ import java.nio.charset.StandardCharsets;
 @ChannelHandler.Sharable
 public class NettyClientHandler extends SimpleChannelInboundHandler<String> {
 
+    @Autowired
+    private NettyClient nettyClient;
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
         log.info("client read :{}",msg);
-        if(msg != null && msg.equals("close channel event")){
-            ctx.channel().close();
+        if(!StringUtils.hasText(msg)){
+            switch (msg){
+                case "PONG35308XFFF" : break;
+                case "close channel event" :
+                    log.warn("来自服务端的关闭事件");
+                    ctx.channel().close();break;
+                default:
+                    //处理常规事件
+                    break;
+            }
         }
     }
 
@@ -58,6 +71,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<String> {
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         log.info("channelReadComplete");
         super.channelReadComplete(ctx);
+        ctx.channel().flush();
     }
 
     @Override
