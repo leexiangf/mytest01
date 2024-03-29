@@ -1,6 +1,5 @@
 package com.lxf.eas.utils;
 
-import com.alibaba.fastjson2.JSONObject;
 import com.lxf.common.annotation.RedissonLimit;
 import com.lxf.common.enums.LimitType;
 import org.aspectj.lang.ProceedingJoinPoint;

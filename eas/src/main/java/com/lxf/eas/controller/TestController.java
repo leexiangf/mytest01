@@ -1,9 +1,6 @@
 package com.lxf.eas.controller;
 
 import com.lxf.common.result.JsonResult;
-import com.lxf.eas.utils.HexUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
